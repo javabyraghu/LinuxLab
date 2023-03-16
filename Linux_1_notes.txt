@@ -1,0 +1,386 @@
+whoami
+pwd
+cal
+date
+
+Linux File System
+Everyting is a file
+2 types of files
+1. Normal files
+2. Directory files (Folder)
+
+# normal file symbol - and directory file symbol d
+
+# to create a file in Linux
+a. cat (view and copy write/append)
+cat fil1.txt
+cat > file1.txt
+cat >> file1.txt
+cat file1.txt > file2.txt
+cat file1.txt file2.txt > file3.txt
+b. vi /vim editor
+c. touch (create empty file)
+ ex: touch a1 b2.txt c3
+d. nano (editor)
+
+#** Press ctrl+d to save
+
+# to view all files use ls or ls -l
+
+# to rename a file 
+mv oldfilename newfilename
+mv file1.txt myfile.txt
+
+## to delete file
+rm filename1 filename2
+-----------------------------------
+# Working with directory
+
+mkdir foldername
+mkdir -p folder1/folder2/folder3
+cd foldername
+
+rmdir foldername
+rm -r foldername
+
+===============================================
+ls -l
+ls -lt [time stamp]
+ls -lr [reverse]
+ls -lS [size]
+
+--to view file content---
+head : To display first 10 lines of files
+	head -n 15 filename  //first 15 lines of data
+tail : To display last 10 lines of files
+	tail -n 15 filename
+	tail -f filename //for log files
+	tail +12 filename // from line number 12
+
+grep : [Global Regular Expression Print]
+=> Grep is used for searching data inside file
+
+  grep 'input' filename
+  grep 'linux' *  [all files in pwd]
+  grep -i 'linux' * [ignore case]
+
+  =======================
+wc filename.txt  ==> To find word count in a file
+
+cp : copy files from source to destination
+
+===========================================
+vi | Visual Editor : open/create file
+
+=> vi filename
+=> Press i for insert mode
+=> Modify/enter data
+=> press escape then :wq
+=> press q! (force quit without saving)
+===========================
+SED : Steam Editor
+-> search , find , replace, insert and delete without opening file
+
+
+sed 's/Python/Java' filename //only output
+sed -i 's/Python/Java' filename //modify even file data
+sed -i '$d' filename //delete last line
+sed -i '5d' filename // delete 5th line
+
+================================
+find and locate : 
+
+locate apache : files location
+locate -c apache : files count
+locate *.txt
+locate -c *.txt
+
+find <location_to_seach> -name filename
+find . -name data.txt
+find $PWD -name data.txt
+find -type f -empty
+find /home -type d -name devops  (seach folder name devops)
+===============================================
+File permission
+-> A file can have 3 types permissions
+
+	1) Read (r)
+
+	2) Write (w)
+
+	3) Execute (x)
+
+-> File permissions are divided into 3 secions
+
+Section-1 : User permissions   (first 3 characters represents user permissions)
+
+Section-2 : Group Permissions  (from 4th to 6th character represents group permissions)
+
+Section-3 : Others Permissions (From 7th to 9th character represents others permissions)
+
+
+
+->  rwxrwxrwx
+     
+	User --> having read, write & execute permissions
+
+	Group --> having read, write & execute permissions
+
+	Others --> having read, write & execute permissions
+
+
+->  rw-rw-r--
+
+	User -->    read & write
+ 
+      Group -->  read & write
+
+      Others -->  only read
+
+->   r--r--r-x
+
+	User -->    read 
+ 
+      Group -->  read 
+
+      Others -->  read & execute
+
+
+->   -r-xr-x--x
+
+	user --> read & execute
+	
+	Group  --> read & execute
+
+	Others --> Only execute
+
+
+->   d-w---x---
+
+	user  -->  only wite
+
+       group  -->  only execute
+
+       Others --> No permission
+	
+
+	
+########################
+Modifying File Permissions
+########################
+
+-> Using 'chmod' command we can change file permissions in Linux OS
+
+-> Using 'chmod' we can add and remove permissions
+
+
+Note:  '+' represents adding  '-'  represents removing
+
+
+# Add execute permission for the user
+$ chmod u+x raghu.txt
+
+# Remove execute permission for the user
+$ chmod u-x raghu.txt
+
+# Add execute permission for the group
+$ chmod g+x raghu.txt
+
+# Add write permission for user
+$ chmod u+w raghu.txt
+
+# Remove write permission for the group
+$ chmod g-w raghu.txt
+
+# Remove write & execute pemissions for the group
+$ chmod g-wx raghu.txt
+
+# Add write and execute permission for the user
+$ chmod u+wx raghu.txt
+
+# Add execute permission for others
+$ chmod o+x raghu.txt
+
+
+####################################
+File Permissions with Numeric Numbers
+######################################
+
+0  --> No permission
+
+1  --> Only Execute
+
+2  --> Only Write
+
+3  --> Execute & Write
+
+4  --> Only Read
+
+5  --> Read & Execute
+
+6  --> Read & Write
+
+7  --> Read, Write & Execute
+
+
+$ chmod 777 players.txt
+
+user -> rwx
+group -> rwx
+other -> rwx
+
+$ chmod 765 players.txt
+
+user --> rwx
+group -> rw
+others -> rx
+
+$ chmod -R 756 /opt/data  (all files and folders)
+=======================================================
+		User Accounts
+#################################
+Working with User Accounts in Linux
+################################
+
+-> Linux is a multi-user operating system
+
+-> With in one linux machine we can create multiple user accounts
+
+-> Multiple users can access one linux vm at a time and they can perform Multi-tasking
+
+
+Note: Every linux machine will have 'root' account ( super user --> sudo )
+
+
+-> When we launch a linux vm using 'Amazon Linux AMI' we will get 'ec2-user' account by default
+
+
+# Switch to root user
+
+$ sudo su
+$ sudo -i
+
+Note: To perform admin activities we will use 'sudo' permission
+
+
+#################
+Create user in linux
+#################
+
+# create user
+$ sudo useradd  <username>
+  sudo passwd <username> 
+
+# verify user account details
+$ id <username>
+
+# List all users in Linux
+$ cat /etc/passwd
+
+# delete user
+$ sudo userdel <username>
+
+# Display all groups 
+$ cat /etc/group
+
+# Create a group
+$ sudo groupadd <groupname>
+
+# Add user to a group
+$ sudo usermod -aG <group-name> <user-name>
+
+# Remove user from the group
+$ sudo gpasswd -d <username> <group-name>
+
+# Delete group
+$ sudo groupdel <group-name>
+
+# print users who are belongs to particular group
+$ sudo lid -g <group-name>
+
+
+
+#########
+chown
+########
+
+-> 'chown' command is used to change file ownership
+
+-> We can see owner of the file using 'ls -l' command
+
+# changing owner of a file
+
+$ sudo chown <uname> <filename>
+
+-> We can change file owner using userID also
+
+$ sudo chown <UID> <filename>
+
+Note: We can get UID fo username using 'id uname' command
+
+$ id ramesh
+
+# change group of a file
+$ sudo chown :groupName <fileName>
+
+
+
+#######################
+
+# ifconfig  : It is used to print ip address of our machine
+
+$ ifconfig
+
+# wget   : It is used to download a file based on URL
+
+$ wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65.tar.gz
+
+# curl  : It is used to send HTTP request to URL
+
+$ curl https://raghu-sb-rest-api.herokuapp.com/
+
+# ping : It is used to check network connectivity
+
+	$ ping www.google.com
+
+
+
+###########################################
+How to deploy  website in Linux Machine
+###########################################
+
+-> To run web applications we need webserver
+
+Note : httpd we can use as a webserver (It is apache webserver)
+
+$ sudo yum update
+
+$ sudo yum install httpd
+
+$ sudo service httpd start
+
+Note: Enable HTTP Protocol with 80 port in Security group (inbound rules) of our EC2 instance.
+
+-> Ater enabling 80 port in security group we can access our website using EC2 instance public ip.
+
+-> To change web page content we can use below commands
+
+$ cd /var/www/html
+
+$ sudo vi index.html  (write the content in index.html file and save it)
+
+-> Now access EC2 instance public ip in browser
+
+
+#####################################
+How to install required softwares in Linux
+#####################################
+
+$ sudo yum install git
+$ git --version
+
+$ sudo yum install maven
+$ mvn -version
+
+$ sudo yum install java
+$ java -version

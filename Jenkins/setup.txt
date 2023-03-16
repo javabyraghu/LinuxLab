@@ -1,0 +1,51 @@
+sudo yum update -y
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo --no-check-certificate
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+sudo yum upgrade
+# Add required dependencies for the jenkins package
+sudo yum install java-11-openjdk
+sudo yum install java-11-openjdk-devel -y
+sudo yum install jenkins
+sudo systemctl daemon-reload
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+#########################################################
+# Install mlocate and tree
+sudo yum install mlocate tree -y
+# Install Git
+sudo yum install git -y
+# Install Maven
+sudo yum install maven -y
+
+
+# Global Tool Configuration
+# Example Java Home Path
+/usr/lib/jvm/java-11-openjdk-11.0.17.0.8-2.el7_9.x86_64/bin
+# Example Github Path
+/usr/bin/git
+# Example Maven Path
+/usr/share/maven
+
+https://phoenixnap.com/kb/how-to-install-apache-maven-on-centos-7
+
+sudo vi /etc/profile.d/maven.sh
+---------------------------------
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.17.0.8-2.el7_9.x86_64
+
+export M2_HOME=/opt/maven
+
+export MAVEN_HOME=/opt/maven
+
+export PATH=${M2_HOME}/bin:${PATH}
+-------------------------------------
+sudo chmod +x /etc/profile.d/maven.sh
+sudo -s
+source /etc/bash.bashrc
+
+------Else in Execute Shell---------
+export MAVEN_HOME=/opt/maven
+export PATH=$PATH:$MAVEN_HOME/bin
+mvn --version
+mvn clean package
+------------------------------------
